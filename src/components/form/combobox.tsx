@@ -18,25 +18,24 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { Category } from "@/types";
-import { useCategoryDropdownStore } from "@/zustand-store/store";
+import { Property } from "@/types";
 
-interface CategoryDropdown {
-  categories: Category[];
-}
+interface CategoryDropdown extends Property {}
 
-export function Categories({ categories }: CategoryDropdown) {
+export function PropertyCombobox({ options, name }: CategoryDropdown) {
   const [open, setOpen] = React.useState(false);
-  const { setCategoryValue, categoryValue } = useCategoryDropdownStore();
-  const C = categories.map(({ slug, id }) => ({ value: id, label: slug })) as {
-    label: string;
-    value: string;
-  }[];
+  const [value, setValue] = React.useState<any>("");
+
+  // const { setCategoryValue, categoryValue } = useCategoryDropdownStore();
+  const O = options.map(({ name, id }) => ({
+    value: id.toString(),
+    label: name,
+  }));
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <div>
-        <p className="mb-1 text-sm font-semibold">Main Category</p>
+        <p className="mb-1 text-sm font-semibold">{name}</p>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
@@ -44,24 +43,27 @@ export function Categories({ categories }: CategoryDropdown) {
             aria-expanded={open}
             className="min-w-[340px] justify-between"
           >
-            {categoryValue
-              ? C.find((item) => item.value == categoryValue)?.label
-              : "Select main category..."}
+            {value ? (
+              O.find((item) => item.value === value)?.label
+            ) : (
+              <p className="text-gray-400">Select {name}...</p>
+            )}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[260px] p-0">
           <Command>
-            <CommandInput placeholder="Search framework..." className="h-9" />
+            <CommandInput placeholder={`Search ${name}...`} className="h-9" />
             <CommandEmpty>No item found.</CommandEmpty>
             <CommandGroup>
               <CommandList>
-                {C.map((item) => (
+                {O.map((item) => (
                   <CommandItem
                     key={item.value}
                     value={item.value}
+                    defaultValue={item.value}
                     onSelect={(currentValue) => {
-                      setCategoryValue(item.value);
+                      setValue(currentValue === value ? "" : currentValue);
                       setOpen(false);
                     }}
                   >
@@ -69,9 +71,7 @@ export function Categories({ categories }: CategoryDropdown) {
                     <CheckIcon
                       className={cn(
                         "ml-auto h-4 w-4",
-                        categoryValue === item.value
-                          ? "opacity-100"
-                          : "opacity-0"
+                        value === item.value ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </CommandItem>

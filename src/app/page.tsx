@@ -1,8 +1,7 @@
 import { Categories } from "@/components/common";
 import { SubCategories } from "@/components/common/subcategories";
 import { api } from "@/services";
-import { Category } from "@/types/categories";
-import { DividerHorizontalIcon } from "@radix-ui/react-icons";
+import { Category } from "@/types";
 import { Properties } from "./components";
 
 async function getCategories(): Promise<Category[]> {
@@ -22,9 +21,11 @@ export default async function Home() {
       <Categories categories={categories} />
       <SubCategories categories={categories} />
 
-      <Properties />
+      <div className="mt-4">
+        <Properties />
+      </div>
 
-      <pre>{JSON.stringify(categories, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(categories, null, 2)}</pre> */}
     </main>
   );
 }
