@@ -1,10 +1,30 @@
-import Image from "next/image";
+import { Categories } from "@/components/common";
+import { SubCategories } from "@/components/common/subcategories";
+import { api } from "@/services";
+import { Category } from "@/types/categories";
+import { DividerHorizontalIcon } from "@radix-ui/react-icons";
+import { Properties } from "./components";
 
-export default function Home() {
+async function getCategories(): Promise<Category[]> {
+  const res = await api.get("/get_all_cats");
+
+  if (res.status !== 200) {
+    throw new Error("Failed to fetch categories");
+  }
+
+  return res.data.data?.categories;
+}
+
+export default async function Home() {
+  const categories = await getCategories();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1>Main Category</h1>
-      <h1>Sub Category</h1>
+    <main className="min-h-screen p-24 max-w-sm flex flex-col items-start gap-4">
+      <Categories categories={categories} />
+      <SubCategories categories={categories} />
+
+      <Properties />
+
+      <pre>{JSON.stringify(categories, null, 2)}</pre>
     </main>
   );
 }
