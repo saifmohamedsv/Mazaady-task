@@ -11,6 +11,8 @@ export function Properties({}: PropertiesProps) {
   if (loading) return "Loading...";
   if (loading || !properties) return "No properties to display";
 
+  console.log(properties[0], "Property");
+
   return (
     <div>
       <h1 className="mb-2 font-semibold text-slate-500">Select properties</h1>
