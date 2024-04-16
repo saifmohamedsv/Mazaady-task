@@ -28,8 +28,7 @@ export function PropertyCombobox({
 }: CategoryDropdown) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<any>("");
-  const [otherValue, setOtherValue] = React.useState<any>("");
-  const { insertPropertyValue, removePropertyValue } =
+  const { insertPropertyValue, removePropertyValue, properties } =
     useCategoryDropdownStore();
 
   const O = options.map(({ name, id }) => ({
@@ -37,12 +36,17 @@ export function PropertyCombobox({
     label: name,
   }));
 
-  console.log(O, `options of property ${propertyName}`);
-
   const handleSetValueOnSelectAndClosePopover = (currentValue: string) => {
     setValue(currentValue === value ? "" : currentValue);
     setOpen(false);
   };
+
+  const handleInsertPropertValue = (item: { label: string; value: string }) =>
+    insertPropertyValue({
+      id: propertyId,
+      name: propertyName,
+      selectedOption: item,
+    });
 
   const OtherOption = () => (
     <CommandItem
@@ -58,6 +62,32 @@ export function PropertyCombobox({
       />
     </CommandItem>
   );
+
+  const OtherOptionInput = () => {
+    const storedValue = properties.find(
+      (prop) => prop.id === propertyId
+    )?.selectedOption;
+    const [value, setValue] = React.useState<any>(storedValue?.value || "");
+
+    return (
+      <div className="flex w-full max-w-sm items-center space-x-2">
+        <Input
+          value={value}
+          onChange={({ target: { value } }) => setValue(value)}
+          placeholder={`Write other value for ${propertyName}`}
+          className="mt-1"
+          type="text"
+        />
+        <Button
+          onClick={() =>
+            handleInsertPropertValue({ label: value, value: value })
+          }
+        >
+          Save
+        </Button>
+      </div>
+    );
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -98,11 +128,7 @@ export function PropertyCombobox({
                     onSelect={(currentValue) => {
                       currentValue === value
                         ? removePropertyValue(propertyId)
-                        : insertPropertyValue({
-                            id: propertyId,
-                            name: propertyName,
-                            selectedOption: item,
-                          });
+                        : handleInsertPropertValue(item);
                       handleSetValueOnSelectAndClosePopover(currentValue);
                     }}
                   >
@@ -121,15 +147,7 @@ export function PropertyCombobox({
           </Command>
         </PopoverContent>
 
-        {value === "other" && (
-          <Input
-            value={otherValue}
-            onChange={(e) => setOtherValue(e.target.value)}
-            className="mt-1"
-            type="text"
-            placeholder={`Write other value for ${propertyName}`}
-          />
-        )}
+        {value === "other" && <OtherOptionInput />}
       </div>
     </Popover>
   );

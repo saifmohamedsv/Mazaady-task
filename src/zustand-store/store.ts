@@ -31,10 +31,23 @@ export const useCategoryDropdownStore = create<CategoriesDropdownProps>()(
     },
 
     properties: [],
-    insertPropertyValue: (proeprty: StoredProperty) => {
-      set((state) => ({
-        properties: [...state.properties, proeprty],
-      }));
+    insertPropertyValue: (property: StoredProperty) => {
+      const foundProperty = get().properties.find(
+        (prop) => prop.id === property.id
+      );
+      const filteredProperties = get().properties.filter(
+        (prop) => prop.id !== property.id
+      );
+      console.log(foundProperty, !foundProperty);
+      if (!foundProperty) {
+        set((state) => ({
+          properties: [...state.properties, property],
+        }));
+      } else {
+        set({
+          properties: [...filteredProperties, property],
+        });
+      }
     },
     removePropertyValue: (proeprtyId: number) => {
       const filteredProperties = get().properties.filter(

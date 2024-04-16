@@ -1,7 +1,9 @@
 "use client";
 
 import { PropertyCombobox } from "@/components/form/combobox";
+import { ScrollArea, ScrollBar } from "@/components/ui";
 import { useFetchProperties } from "@/hooks";
+import clsx from "clsx";
 
 interface PropertiesProps {}
 
@@ -14,13 +16,13 @@ export function Properties({}: PropertiesProps) {
   console.log(properties[0], "Property");
 
   return (
-    <div>
+    <>
       <h1 className="mb-2 font-semibold text-slate-500">Select properties</h1>
       <div className="flex flex-col items-start gap-4">
         {properties?.map((property) => (
           <PropertyCombobox key={property.id} {...property} />
         ))}
       </div>
-    </div>
+    </>
   );
 }
