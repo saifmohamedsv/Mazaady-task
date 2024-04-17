@@ -19,7 +19,7 @@ This project is built using Next.js with TypeScript, Jest for testing, and Zusta
 3. Install dependencies:
 
    ```bash
-   npm install
+   yarn
    ```
 
 ## Environment Variables
@@ -33,7 +33,7 @@ This project is built using Next.js with TypeScript, Jest for testing, and Zusta
 To start the development server, run the following command:
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
@@ -43,7 +43,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 To run Jest tests, use the following command:
 
 ```bash
-npm run test
+yarn test
 ```
 
 This will run all test suites and display the test results.
