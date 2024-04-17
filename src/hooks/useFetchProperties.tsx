@@ -1,7 +1,7 @@
 "use client";
 import { getProperties } from "@/services";
 import { Property } from "@/types";
-import { useCategoryDropdownStore } from "@/zustand-store/store";
+import { useCategoryDropdownStore } from "@/lib/store";
 import { useEffect, useState } from "react";
 export function useFetchProperties(): {
   data: Property[] | null;

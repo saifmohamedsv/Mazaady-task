@@ -1,37 +1,61 @@
+import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 
-  import type { Action, ThunkAction } from "@reduxjs/toolkit";
-import { combineSlices, configureStore } from "@reduxjs/toolkit";
-import { counterSlice } from "./features/counter/counterSlice";
-import { quotesApiSlice } from "./features/quotes/quotesApiSlice";
+interface StoredProperty {
+  name: string;
+  id: number;
+  selectedOption: { value: string; label: string };
+}
+interface CategoriesDropdownProps {
+  categoryValue: string;
+  setCategoryValue: (categoryId: string) => void;
 
-// combineSlices automatically combines the reducers using
-// their reducerPaths, therefore we no longer need to call combineReducers.
-const rootReducer = combineSlices(counterSlice, quotesApiSlice);
-// Infer the RootState type from the root reducer
-export type RootState = ReturnType<typeof rootReducer>;
+  subCategoryValue: string;
+  setSubCategoryValue: (subCategoryId: string) => void;
 
-// makeStore encapsulates the store configuration to allow
-// creating unique store instances, which is particularly important for
-// server-side rendering (SSR) scenarios. In SSR, separate store instances
-// are needed for each request to prevent cross-request state pollution.
-export const makeStore = () => {
-  return configureStore({
-    reducer: rootReducer,
-    // Adding the api middleware enables caching, invalidation, polling,
-    // and other useful features of rtk-query.
-    middleware: (getDefaultMiddleware) => {
-      return getDefaultMiddleware().concat(quotesApiSlice.middleware);
+  properties: StoredProperty[];
+  insertPropertyValue: (property: StoredProperty) => void;
+  removePropertyValue: (propertyId: number) => void;
+}
+
+export const useCategoryDropdownStore = create<CategoriesDropdownProps>()(
+  devtools((set, get) => ({
+    categoryValue: "",
+    setCategoryValue: (categoryId: string) => {
+      set({ categoryValue: categoryId });
     },
-  });
-};
 
-// Infer the return type of makeStore
-export type AppStore = ReturnType<typeof makeStore>;
-// Infer the AppDispatch type from the store itself
-export type AppDispatch = AppStore["dispatch"];
-export type AppThunk<ThunkReturnType = void> = ThunkAction<
-  ThunkReturnType,
-  RootState,
-  unknown,
-  Action
->; 
+    subCategoryValue: "",
+    setSubCategoryValue: (subCategoryId: string) => {
+      set({ subCategoryValue: subCategoryId });
+    },
+
+    properties: [],
+    insertPropertyValue: (property: StoredProperty) => {
+      const foundProperty = get().properties.find(
+        (prop) => prop.id === property.id
+      );
+      const filteredProperties = get().properties.filter(
+        (prop) => prop.id !== property.id
+      );
+      console.log(foundProperty, !foundProperty);
+      if (!foundProperty) {
+        set((state) => ({
+          properties: [...state.properties, property],
+        }));
+      } else {
+        set({
+          properties: [...filteredProperties, property],
+        });
+      }
+    },
+    removePropertyValue: (proeprtyId: number) => {
+      const filteredProperties = get().properties.filter(
+        (prop) => prop.id !== proeprtyId
+      );
+      set({
+        properties: filteredProperties,
+      });
+    },
+  }))
+);

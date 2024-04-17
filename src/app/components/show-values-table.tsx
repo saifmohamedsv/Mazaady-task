@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui";
 import { useState } from "react";
 import { ValuesTable } from "./values-table";
-import { useCategoryDropdownStore } from "@/zustand-store/store";
+import { useCategoryDropdownStore } from "@/lib/store";
 
 interface ShowValuesTableProps {}
 

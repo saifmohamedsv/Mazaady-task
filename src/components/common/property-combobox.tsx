@@ -15,7 +15,7 @@ import {
 } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { Property } from "@/types";
-import { useCategoryDropdownStore } from "@/zustand-store/store";
+import { useCategoryDropdownStore } from "@/lib/store";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import * as React from "react";
 

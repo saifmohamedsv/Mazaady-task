@@ -1,7 +1,7 @@
 "use client";
 
 import { syntaxHighlight } from "@/lib/utils";
-import { useCategoryDropdownStore } from "@/zustand-store/store";
+import { useCategoryDropdownStore } from "@/lib/store";
 
 interface StorePrettyDisplayProps {}
 

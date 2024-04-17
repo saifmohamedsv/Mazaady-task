@@ -3,23 +3,21 @@
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import * as React from "react";
 
-import { Button } from "@/components/ui";
 import {
+  Button,
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui";
-import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { Category } from "@/types";
-import { useCategoryDropdownStore } from "@/zustand-store/store";
+import { useCategoryDropdownStore } from "@/lib/store";
 
 interface SubCategoriesDropdown {
   categories: Category[];

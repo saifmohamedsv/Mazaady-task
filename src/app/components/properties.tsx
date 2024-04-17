@@ -1,6 +1,6 @@
 "use client";
 
-import { PropertyCombobox } from "@/components/form/combobox";
+import { PropertyCombobox } from "@/components/common/property-combobox";
 import { ScrollArea, ScrollBar } from "@/components/ui";
 import { useFetchProperties } from "@/hooks";
 import clsx from "clsx";

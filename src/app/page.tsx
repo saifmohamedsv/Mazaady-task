@@ -1,5 +1,5 @@
 import { Categories } from "@/components/common";
-import { SubCategories } from "@/components/common/subcategories";
+import { SubCategories } from "@/components/common/subcategories-combobox";
 import { Button } from "@/components/ui";
 import { api } from "@/services";
 import { Category } from "@/types";
@@ -23,7 +23,7 @@ export default async function Home() {
   const categories = await getCategories();
 
   return (
-    <main className="h-screen p-12 ">
+    <main className="h-screen p-12">
       <div className="grid grid-cols-12">
         <div
           className={clsx(
@@ -44,7 +44,7 @@ export default async function Home() {
           <StorePrettyDisplay />
         </div>
       </div>
-      
+
       <ShowValuesTable />
     </main>
   );
