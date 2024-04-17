@@ -1,12 +1,9 @@
 import { Categories } from "@/components/common";
 import { SubCategories } from "@/components/common/subcategories-combobox";
-import { api, getCategories } from "@/services";
-import { Category } from "@/types";
+import { getCategories } from "@/services";
 import clsx from "clsx";
 import { Properties, StorePrettyDisplay } from "./components";
 import { ShowValuesTable } from "./components/show-values-table";
-
-
 
 export default async function Home() {
   const categories = await getCategories();

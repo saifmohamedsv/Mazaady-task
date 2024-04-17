@@ -2,9 +2,9 @@ import { Category } from "@/types";
 import axios, { AxiosInstance } from "axios";
 
 const baseURL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "https://staging.mazaady.com/api/v1/";
+  process.env.NEXT_PUBLIC_API_BASE_URL;
 const apiKey =
-  process.env.NEXT_PUBLIC_PRIVATE_KEY || "3%o8i}_;3D4bF]G5@22r2)Et1&mLJ4?$@+16";
+  process.env.NEXT_PUBLIC_PRIVATE_KEY;
 // I did this bad practice because of the time, while deploying I figured out it's failing while building
 
 export const api: AxiosInstance = axios.create({

@@ -1,15 +1,12 @@
 "use client";
 
 import { PropertyCombobox } from "@/components/common/property-combobox";
-import { ScrollArea, ScrollBar } from "@/components/ui";
 import { useFetchProperties } from "@/hooks";
-import clsx from "clsx";
 
 interface PropertiesProps {}
 
 export function Properties({}: PropertiesProps) {
   const { data: properties, error, loading } = useFetchProperties();
-
   if (loading) return "Loading...";
   if (loading || !properties) return "No properties to display";
 
