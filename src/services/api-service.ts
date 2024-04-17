@@ -1,11 +1,8 @@
 import { Category } from "@/types";
 import axios, { AxiosInstance } from "axios";
 
-const baseURL =
-  process.env.NEXT_PUBLIC_API_BASE_URL;
-const apiKey =
-  process.env.NEXT_PUBLIC_PRIVATE_KEY;
-// I did this bad practice because of the time, while deploying I figured out it's failing while building
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const apiKey = process.env.NEXT_PUBLIC_PRIVATE_KEY;
 
 export const api: AxiosInstance = axios.create({
   baseURL,
